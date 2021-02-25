@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="log2json-fauzanelka", # Replace with your own username
+    name="log2json-fauzanelka",
     version="0.0.1",
     author="Fauzan Elka",
     author_email="fauzan.elka@gmail.com",
@@ -22,4 +22,9 @@ setuptools.setup(
     ],
     packages=setuptools.find_packages(),
     python_requires='>=3.6',
+	entry_points={
+		"console_scripts": [
+			'log2json = log2json.__main__:main'
+		]
+	},
 )

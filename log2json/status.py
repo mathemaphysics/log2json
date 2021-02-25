@@ -1,6 +1,6 @@
 from enum import IntEnum
 
-class ExistStatus(IntEnum):
+class ExitStatus(IntEnum):
 	"""Program exit status code constants."""
 	# https://tldp.org/LDP/abs/html/exitcodes.html
 	SUCCESS = 0

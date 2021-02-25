@@ -1,1 +1,5 @@
 log2json/**/__pycache__
+build
+dist
+tmp
+log2json_fauzanelka.egg-info
