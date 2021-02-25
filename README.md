@@ -39,9 +39,23 @@ Convert multiple log files to text with destination directory
 log2json /var/log/nginx/access.log /var/log/nginx/error.log -d $HOME/log2json/
 ```
 
-If destination directory is not provided, the scripts will use current directory and `log2json_output`
+If destination directory is not provided, the scripts will use `current directory` + `log2json_output`
 
-### For further documentation you can run:
+### Convert to json format (not implemented yet)
+
+Convert log file to json
+
+```bash
+log2json /var/log/nginx/access.log -t json -o $HOME/nginx-access.txt
+```
+
+Convert multiple log files to text with destination directory
+
+```bash
+log2json /var/log/nginx/access.log /var/log/nginx/error.log -t json -d $HOME/log2json/
+```
+
+### For further documentation you can run
 
 ```bash
 log2json -h
