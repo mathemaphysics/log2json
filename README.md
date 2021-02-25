@@ -41,7 +41,7 @@ log2json /var/log/nginx/access.log /var/log/nginx/error.log -d $HOME/log2json/
 
 If destination directory is not provided, the scripts will use `current directory` + `log2json_output`
 
-### Convert to json format (not implemented yet)
+### Convert to json format
 
 Convert log file to json
 
