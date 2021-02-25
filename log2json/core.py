@@ -4,6 +4,7 @@ import shutil
 import sys
 import os
 import json
+import cchardet
 from typing import List, Optional, Tuple, Union
 from log2json.status import ExitStatus
 from log2json.cli.definition import parser
@@ -144,7 +145,8 @@ def write2json(input_path: str, output_path: str, regex: str):
 	o_fp = open(output_path, mode="w", encoding="utf-8")
 
 	lines = []
-	with open(input_path, mode="r", encoding="utf-16") as i_fp:
+	encoding = cchardet.detect(open(input_path, mode="rb").read())['encoding']
+	with open(input_path, mode="r", encoding=encoding) as i_fp:
 		for line in i_fp:
 			if (regex):
 				r = re.compile(regex)
