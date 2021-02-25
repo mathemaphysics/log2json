@@ -107,7 +107,7 @@ def program(args: argparse.Namespace) -> ExitStatus:
 					)
 				)
 
-			write2json(input_path, output_path)
+			write2json(input_path, output_path, args.e)
 		else:
 			if (args.d):
 				output_dir = os.path.abspath(args.d)
@@ -129,17 +129,29 @@ def program(args: argparse.Namespace) -> ExitStatus:
 					os.path.splitext(os.path.basename(input_path))[0] + '.json'
 				)
 
-				write2json(input_path, output_path)
+				write2json(input_path, output_path, args.e)
 
 	return exit_status
 
-def write2json(input_path: str, output_path: str):
+def write2json(input_path: str, output_path: str, regex: str):
+	if (regex):
+		import re
+		try:
+			re.compile(regex)
+		except re.error:
+			parser.error("Provided regex is not valid.")
+
 	o_fp = open(output_path, mode="w", encoding="utf-8")
 
 	lines = []
-	with open(input_path, mode="r") as i_fp:
+	with open(input_path, mode="r", encoding="utf-16") as i_fp:
 		for line in i_fp:
-			lines.append(line.strip())
+			if (regex):
+				r = re.compile(regex)
+				x = [m.groupdict() for m in r.finditer(line.strip())]
+				lines.append(x[0])
+			else:
+				lines.append(line.strip())
 
 	json.dump(lines, fp=o_fp, indent=2)
 

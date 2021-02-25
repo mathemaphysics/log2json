@@ -60,5 +60,6 @@ parser.add_argument(
 	"-e",
 	type=str,
 	nargs="?",
+	default="",
 	help="RegEx for json type format"
 )
