@@ -26,7 +26,7 @@ parser.add_argument(
 parser.add_argument(
 	"-t",
 	type=str,
-	nargs=1,
+	nargs="?",
 	default="text",
 	choices=["text", "json"],
 	help="Output format (default: text)"
@@ -39,7 +39,7 @@ parser.add_argument(
 parser.add_argument(
 	"-o",
 	type=str,
-	nargs=1,
+	nargs="?",
 	help="Output file path."
 )
 
@@ -49,6 +49,16 @@ parser.add_argument(
 parser.add_argument(
 	"-d",
 	type=str,
-	nargs=1,
+	nargs="?",
 	help="Output file directory for multiple log files"
+)
+
+#######################################################################
+# RegEx for json type
+#######################################################################
+parser.add_argument(
+	"-e",
+	type=str,
+	nargs="?",
+	help="RegEx for json type format"
 )

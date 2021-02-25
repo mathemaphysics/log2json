@@ -3,6 +3,7 @@ import argparse
 import shutil
 import sys
 import os
+import json
 from typing import List, Optional, Tuple, Union
 from log2json.status import ExitStatus
 from log2json.cli.definition import parser
@@ -51,8 +52,8 @@ def program(args: argparse.Namespace) -> ExitStatus:
 		if len(args.logfile) == 1:
 			input_path = os.path.abspath(args.logfile[0])
 
-			if (args.o[0]):
-				output_path = os.path.abspath(args.o[0])
+			if (args.o):
+				output_path = os.path.abspath(args.o)
 
 				if (os.path.splitext(output_path)[1] != '.txt'):
 					output_path += '.txt'
@@ -67,8 +68,8 @@ def program(args: argparse.Namespace) -> ExitStatus:
 
 			shutil.copyfile(input_path, output_path)
 		else:
-			if (args.d[0]):
-				output_dir = os.path.abspath(args.d[0])
+			if (args.d):
+				output_dir = os.path.abspath(args.d)
 			else:
 				output_dir = os.path.abspath(
 					os.path.join(
@@ -76,6 +77,9 @@ def program(args: argparse.Namespace) -> ExitStatus:
 						'log2json_output'
 					)
 				)
+
+				if (not os.path.isdir(output_dir)):
+					os.mkdir(output_dir)
 
 			for logfile in args.logfile:
 				input_path = os.path.abspath(logfile)
@@ -87,8 +91,10 @@ def program(args: argparse.Namespace) -> ExitStatus:
 				shutil.copyfile(input_path, output_path)
 	elif args.t == "json":
 		if (len(args.logfile) == 1):
-			if (args.o[0]):
-				output_path = os.path.abspath(args.o[0])
+			input_path = os.path.abspath(args.logfile[0])
+
+			if (args.o):
+				output_path = os.path.abspath(args.o)
 
 				if (os.path.splitext(output_path)[1] != '.json'):
 					output_path += '.json'
@@ -101,10 +107,10 @@ def program(args: argparse.Namespace) -> ExitStatus:
 					)
 				)
 
-				# Convert to json process here
+			write2json(input_path, output_path)
 		else:
-			if (args.d[0]):
-				output_dir = os.path.abspath(args.d[0])
+			if (args.d):
+				output_dir = os.path.abspath(args.d)
 			else:
 				output_dir = os.path.abspath(
 					os.path.join(
@@ -113,13 +119,28 @@ def program(args: argparse.Namespace) -> ExitStatus:
 					)
 				)
 
+				if (not os.path.isdir(output_dir)):
+					os.mkdir(output_dir)
+
 			for logfile in args.logfile:
 				input_path = os.path.abspath(logfile)
 				output_path = os.path.join(
 					output_dir,
-					os.path.splitext(input_path)[0] + '.json'
+					os.path.splitext(os.path.basename(input_path))[0] + '.json'
 				)
 
-				# Convert to json process here
+				write2json(input_path, output_path)
 
 	return exit_status
+
+def write2json(input_path: str, output_path: str):
+	o_fp = open(output_path, mode="w", encoding="utf-8")
+
+	lines = []
+	with open(input_path, mode="r") as i_fp:
+		for line in i_fp:
+			lines.append(line.strip())
+
+	json.dump(lines, fp=o_fp, indent=2)
+
+	o_fp.close()
