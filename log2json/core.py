@@ -65,7 +65,7 @@ def program(args: argparse.Namespace) -> ExitStatus:
 					)
 				)
 
-			shutil.copy2(input_path, output_path)
+			shutil.copyfile(input_path, output_path)
 		else:
 			if (args.d[0]):
 				output_dir = os.path.abspath(args.d[0])
@@ -81,10 +81,10 @@ def program(args: argparse.Namespace) -> ExitStatus:
 				input_path = os.path.abspath(logfile)
 				output_path = os.path.join(
 					output_dir,
-					os.path.splitext(input_path)[0] + '.txt'
+					os.path.splitext(os.path.basename(input_path))[0] + '.txt'
 				)
 
-				shutil.copy2(input_path, output_path)
+				shutil.copyfile(input_path, output_path)
 	elif args.t == "json":
 		if (len(args.logfile) == 1):
 			if (args.o[0]):
