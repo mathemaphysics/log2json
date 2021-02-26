@@ -6,8 +6,8 @@ def main():
 		from .core import main
 		exit_status = main()
 	except KeyboardInterrupt:
-		from log2json.status import ExistStatus
-		exit_status = ExistStatus.ERROR_CTRL_C
+		from log2json.status import ExitStatus
+		exit_status = ExitStatus.ERROR_CTRL_C
 
 	sys.exit(exit_status)
 
