@@ -151,7 +151,8 @@ def write2json(input_path: str, output_path: str, regex: str):
 			if (regex):
 				r = re.compile(regex)
 				x = [m.groupdict() for m in r.finditer(line.strip())]
-				lines.append(x[0])
+				if len(x) > 0:
+					lines.append(x[0])
 			else:
 				lines.append(line.strip())
 
